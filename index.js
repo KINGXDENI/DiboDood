@@ -39,7 +39,6 @@ app.get('/xnxx', async (req, res) => {
 app.get('/', async (req, res) => {
     try {
         const videos = await xnxx(); // Fetch videos using getVideos function
-        console.log(videos);
         res.render('index', {
             categories,
             videos

@@ -18,25 +18,36 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Dummy data for demonstration
 const categories = [{
-        name: 'All',
+        name: 'Youtube',
         active: true
     },
     {
-        name: 'Website',
+        name: 'Xnxx',
         active: false
     },
     // Add more categories as needed
 ];
+
+// Function to update category active status
+function updateActiveCategory(categories, activeCategory) {
+    return categories.map(category => ({
+        ...category,
+        active: category.name === activeCategory
+    }));
+}
+
+// Route to fetch and render videos from xnxx
 app.get('/xnxx', async (req, res) => {
     try {
         const videos = await xnxx(); // Fetch videos using xnxx function
+        const updatedCategories = updateActiveCategory(categories, 'Xnxx');
         res.render('index', {
-            categories,
+            categories: updatedCategories,
             videos
         });
     } catch (error) {
         res.status(500).json({
-            error: error
+            error: error.message
         });
     }
 });
@@ -44,10 +55,11 @@ app.get('/xnxx', async (req, res) => {
 // Route to render the homepage
 app.get('/', async (req, res) => {
     try {
-        const searchQuery = 'programming tutorials'; // Query default untuk scrapeYouTube
-        const videos = await scrapeYouTube(searchQuery); // Fetch videos using getVideos function
+        const searchQuery = 'programming tutorials'; // Default search query for scrapeYouTube
+        const videos = await scrapeYouTube(searchQuery); // Fetch videos using scrapeYouTube function
+        const updatedCategories = updateActiveCategory(categories, 'Youtube');
         res.render('index', {
-            categories,
+            categories: updatedCategories,
             videos
         });
     } catch (error) {

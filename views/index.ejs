@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Homepage Clone | CodingNepal</title>
+  <title>DIBO | TUBE</title>
   <!-- Linking Unicons For Icons -->
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="/styles/style.css">
@@ -21,7 +21,7 @@
           </button>
           <a href="#" class="nav-logo">
             <img src="/images/logo.png" alt="Logo" class="logo-image">
-            <h2 class="logo-text">CnTube</h2>
+            <h2 class="logo-text">DiboTube</h2>
           </a>
         </div>
 
@@ -61,7 +61,7 @@
           </button>
           <a href="#" class="nav-logo">
             <img src="/images/logo.png" alt="Logo" class="logo-image">
-            <h2 class="logo-text">CnTube</h2>
+            <h2 class="logo-text">DiboTube</h2>
           </a>
         </div>
 
@@ -145,14 +145,15 @@
         <!-- Category List -->
         <div class="category-list">
           <% categories.forEach(category => { %>
-          <button class="category-button <%= category.active ? 'active' : '' %>"><%= category.name %></button>
+          <a href="/<%= category.name.toLowerCase() %>"
+            class="category-button <%= category.active ? 'active' : '' %>"><%= category.name %></a>
           <% }); %>
         </div>
 
         <!-- Video List -->
         <div class="video-list">
           <% videos.forEach(video => { %>
-          <a href="#" class="video-card">
+          <a href="<%= video.videoURL %>" class="video-card" target="_blank">
             <div class="thumbnail-container">
               <img src="<%= video.thumbnailURL %>" alt="Video Thumbnail" class="thumbnail">
               <p class="duration"><%= video.duration %></p>

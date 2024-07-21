@@ -41,7 +41,8 @@ function updateActiveCategory(categories, activeCategory) {
 app.get('/xnxxdown', async (req, res) => {
     try {
         const url = req.query.url;
-        const iframe = await xnxxdown(url);
+        const frame = await xnxxdown(url);
+        const iframe = frame.iframeSrc
         res.json({
             iframe
         });

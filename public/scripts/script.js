@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const response = await fetch(`/xnxxdown?url=${url}`);
       const data = await response.json();
-      const frame = data.iframe.iframeSrc
-      return frame;
+      const iframe = data
+      return iframe;
     } catch (error) {
       console.error('Error fetching Xnxx iframe:', error);
       return '';

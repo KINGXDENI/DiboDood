@@ -90,22 +90,22 @@ module.exports = function xnxxsearch(query) {
     return new Promise(async (resolve, reject) => {
         const baseurl = 'https://www.xnxx.com';
 
-        // Pilih proxy secara acak
-        const proxyUrl = getRandomProxy();
-        const agent = new HttpsProxyAgent(proxyUrl);
+        // // Pilih proxy secara acak
+        // const proxyUrl = getRandomProxy();
+        // const agent = new HttpsProxyAgent(proxyUrl);
 
-        const axiosConfig = {
-            httpsAgent: agent,
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-            },
-            timeout: 10000 // Atur batas waktu (10 detik)
-        };
+        // const axiosConfig = {
+        //     httpsAgent: agent,
+        //     headers: {
+        //         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        //     },
+        //     timeout: 10000 // Atur batas waktu (10 detik)
+        // };
 
         try {
             const {
                 data
-            } = await axios.get(`${baseurl}/search/${query}/${Math.floor(Math.random() * 9) + 1}`, axiosConfig);
+            } = await axios.get(`${baseurl}/search/${query}/${Math.floor(Math.random() * 9) + 1}`);
             let $ = cheerio.load(data, {
                 xmlMode: false
             });
@@ -154,17 +154,17 @@ module.exports = function xnxxsearch(query) {
 
 module.exports = function xnxxdown(url) {
     return new Promise(async (resolve, reject) => {
-        const proxyUrl = getRandomProxy();
-        const agent = new HttpsProxyAgent(proxyUrl);
+        // const proxyUrl = getRandomProxy();
+        // const agent = new HttpsProxyAgent(proxyUrl);
 
         try {
             const result = await axios.request(url, {
                 method: "get",
-                httpsAgent: agent,
-                headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-                },
-                timeout: 10000 // Atur batas waktu (10 detik)
+                // httpsAgent: agent,
+                // headers: {
+                //     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                // },
+                // timeout: 10000 // Atur batas waktu (10 detik)
             });
 
             const $ = cheerio.load(result.data, {

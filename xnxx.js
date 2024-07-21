@@ -46,7 +46,7 @@ function xnxx() {
 
             $('div.mozaique').each((a, b) => {
                 $(b).find('div.thumb').each((c, d) => {
-                    url.push(baseurl + $(d).find('a').attr('href').replace("/THUMBNUM/", "/"));
+                    url.push('https://www.xnxx.com' + $(d).find('a').attr('href').replace("/THUMBNUM/", "/"));
                     thumb.push($(d).find("img").attr("data-src"));
                 });
             });

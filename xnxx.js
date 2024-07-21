@@ -78,6 +78,7 @@ function xnxx() {
                     duration: duration[i],
                     thumbnailURL: thumb[i],
                     videoURL: url[i],
+                    platform: 'xnxx'
                 });
             }
             resolve(results);

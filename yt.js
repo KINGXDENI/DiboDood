@@ -20,7 +20,8 @@ async function scrapeYouTube(query) {
             postedAt: video.ago,
             duration: video.timestamp, // Durasi dalam format 'm:ss'
             thumbnailURL: video.thumbnail,
-            videoURL: video.url
+            videoURL: video.url,
+            platform: 'youtube'
         }));
 
         return videoDetails;

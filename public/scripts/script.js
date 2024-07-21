@@ -34,41 +34,40 @@ themeButton.addEventListener("click", () => {
 if (window.innerWidth >= 768) {
   document.body.classList.remove("sidebar-hidden");
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   const videoCards = document.querySelectorAll('.video-card');
-  const videoModal = document.getElementById('video-modal');
-  const videoIframe = document.getElementById('video-iframe');
-  const closeButton = document.querySelector('.close-button');
 
   videoCards.forEach(card => {
-    card.addEventListener('click', async () => {
+    card.addEventListener('click', async (event) => {
+      event.preventDefault();
       const url = card.getAttribute('data-url');
       const platform = card.getAttribute('data-platform');
 
       let iframeSrc = '';
       if (platform === 'youtube') {
-        iframeSrc = url;
+        iframeSrc = getYouTubeEmbedURL(url);
       } else if (platform === 'xnxx') {
         iframeSrc = await getXnxxIframe(url);
       }
 
-      videoIframe.src = iframeSrc;
-      videoModal.style.display = 'block';
+      Swal.fire({
+        html: `<iframe width="100%" height="400" src="${iframeSrc}" frameborder="0" allowfullscreen></iframe>`,
+        showCloseButton: true,
+        showConfirmButton: false,
+        width: '80%',
+        padding: '1em',
+        background: '#fff',
+        backdrop: `
+          rgba(0,0,0,0.4)
+        `
+      });
     });
   });
 
-  closeButton.addEventListener('click', () => {
-    videoModal.style.display = 'none';
-    videoIframe.src = '';
-  });
-
-  window.addEventListener('click', (event) => {
-    if (event.target === videoModal) {
-      videoModal.style.display = 'none';
-      videoIframe.src = '';
-    }
-  });
+  function getYouTubeEmbedURL(url) {
+    const videoId = url.split('v=')[1];
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
 
   async function getXnxxIframe(url) {
     try {

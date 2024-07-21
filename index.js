@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
 const {
-    xnxx
+    xnxx,
+    xnxxdown
 } = require('./xnxx');
 const {
     scrapeYouTube
@@ -37,7 +38,20 @@ function updateActiveCategory(categories, activeCategory) {
         active: category.name === activeCategory
     }));
 }
-
+app.get('/xnxxdown', async (req, res) => {
+    try {
+        const url = req.query.url;
+        const iframe = await xnxxdown(url);
+        res.json({
+            iframe
+        });
+    } catch (error) {
+        console.error('Error in xnxxdown route:', error);
+        res.status(500).json({
+            error: 'Internal Server Error'
+        });
+    }
+});
 // Route to fetch and render videos from xnxx
 app.get('/xnxx', async (req, res) => {
     try {

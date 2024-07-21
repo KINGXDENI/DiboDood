@@ -145,7 +145,7 @@
         <!-- Category List -->
         <div class="category-list">
           <% categories.forEach(category => { %>
-          <a href="/<%= category.name.toLowerCase() %>"
+          <a href="/<%= category.url.toLowerCase() %>"
             class="category-button <%= category.active ? 'active' : '' %>"><%= category.name %></a>
           <% }); %>
         </div>

@@ -69,9 +69,9 @@ function xnxx() {
                     id: (i + 1).toString(), // Adding id as a string
                     title: title[i],
                     channel: {
-                        name: "Unknown Channel", // Default or dynamic based on the data
+                        name: "XNXX Channel", // Default or dynamic based on the data
                         url: "https://www.xnxx.com", // Default or dynamic based on the data
-                        logo: "", // Default or dynamic based on the data
+                        logo: "https://www.xnxx.com/favicon-32x32.png", // Default or dynamic based on the data
                     },
                     views: views[i],
                     postedAt: "Unknown", // Default or dynamic based on the data

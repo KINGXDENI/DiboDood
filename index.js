@@ -51,7 +51,19 @@ app.get('/xnxx', async (req, res) => {
         });
     }
 });
-
+app.get('/youtube', async (req, res) => {
+    try {
+        const searchQuery = 'programming tutorials'; // Default search query for scrapeYouTube
+        const videos = await scrapeYouTube(searchQuery); // Fetch videos using scrapeYouTube function
+        const updatedCategories = updateActiveCategory(categories, 'Youtube');
+        res.render('index', {
+            categories: updatedCategories,
+            videos
+        });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 // Route to render the homepage
 app.get('/', async (req, res) => {
     try {

@@ -234,6 +234,7 @@ body.sidebar-hidden .main-layout .sidebar {
 
 .category-list .category-button {
   border: none;
+  text-decoration: none;
   cursor: pointer;
   font-weight: 500;
   font-size: 0.94rem;

@@ -3,6 +3,9 @@ const path = require('path');
 const {
     xnxx
 } = require('./xnxx');
+const {
+    scrapeYouTube
+} = require('./yt');
 const app = express();
 const port = 3100;
 
@@ -27,7 +30,10 @@ const categories = [{
 app.get('/xnxx', async (req, res) => {
     try {
         const videos = await xnxx(); // Fetch videos using xnxx function
-        res.json(videos); // Send data as JSON
+        res.render('index', {
+            categories,
+            videos
+        });
     } catch (error) {
         res.status(500).json({
             error: error
@@ -38,7 +44,8 @@ app.get('/xnxx', async (req, res) => {
 // Route to render the homepage
 app.get('/', async (req, res) => {
     try {
-        const videos = await xnxx(); // Fetch videos using getVideos function
+        const searchQuery = 'programming tutorials'; // Query default untuk scrapeYouTube
+        const videos = await scrapeYouTube(searchQuery); // Fetch videos using getVideos function
         res.render('index', {
             categories,
             videos

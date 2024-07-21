@@ -42,12 +42,18 @@ function xnxx() {
             let thumb = [];
             let rate = [];
             let duration = [];
+            let nameChannel = [];
             let results = [];
 
             $('div.mozaique').each((a, b) => {
                 $(b).find('div.thumb').each((c, d) => {
                     url.push(baseurl + $(d).find('a').attr('href').replace("/THUMBNUM/", "/"));
                     thumb.push($(d).find("img").attr("data-src"));
+                });
+            });
+            $('div.mozaique').each((a, b) => {
+                $(b).find('div.uploader').each((c, d) => {
+                    nameChannel.push($(d).find("a > span").text());
                 });
             });
 
@@ -58,29 +64,30 @@ function xnxx() {
                     const metadataText = $(d).find("p.metadata").text();
                     const durationMatch = metadataText.match(/(\d+min)/);
                     duration.push(durationMatch ? durationMatch[1] : "Unknown");
+
                     $(d).find('a').each((e, f) => {
                         title.push($(f).attr('title'));
                     });
                 });
             });
 
-           for (let i = 0; i < title.length; i++) {
-               results.push({
-                   id: (i + 1).toString(), // Adding id as a string
-                   title: title[i],
-                   channel: {
-                       name: "Unknown Channel", // Default or dynamic based on the data
-                       url: "https://www.xnxx.com", // Default or dynamic based on the data
-                       logo: "", // Default or dynamic based on the data
-                   },
-                   views: views[i],
-                   postedAt: "Unknown", // Default or dynamic based on the data
-                   duration: duration[i],
-                   thumbnailURL: thumb[i],
-                   videoURL: url[i],
-               });
-           }
-           resolve(results);
+            for (let i = 0; i < title.length; i++) {
+                results.push({
+                    id: (i + 1).toString(), // Adding id as a string
+                    title: title[i],
+                    channel: {
+                        name: nameChannel[i], // Default or dynamic based on the data
+                        url: 'https://www.xnxx.com/porn-maker/' + nameChannel[i], // Default or dynamic based on the data
+                        logo: "", // Default or dynamic based on the data
+                    },
+                    views: views[i],
+                    postedAt: "Unknown", // Default or dynamic based on the data
+                    duration: duration[i],
+                    thumbnailURL: thumb[i],
+                    videoURL: url[i],
+                });
+            }
+            resolve(results);
         } catch (err) {
             reject(err);
         }

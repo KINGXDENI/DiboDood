@@ -13,7 +13,7 @@ const {
 //     return `http://${username}:${password}@${host}:${port}`;
 // }
 
-module.exports = function xnxx() {
+function xnxx() {
     return new Promise(async (resolve, reject) => {
         const baseurl = 'https://www.xnxx.com/todays-selection';
 
@@ -86,7 +86,7 @@ module.exports = function xnxx() {
         }
     });
 }
-module.exports = function xnxxsearch(query) {
+function xnxxsearch(query) {
     return new Promise(async (resolve, reject) => {
         const baseurl = 'https://www.xnxx.com';
 
@@ -152,7 +152,7 @@ module.exports = function xnxxsearch(query) {
     });
 }
 
-module.exports = function xnxxdown(url) {
+function xnxxdown(url) {
     return new Promise(async (resolve, reject) => {
         // const proxyUrl = getRandomProxy();
         // const agent = new HttpsProxyAgent(proxyUrl);
@@ -346,3 +346,5 @@ function bokepbub(query) {
         }).catch(reject);
     });
 }
+
+module.exports ={xnxx, xnxxdown, xnxxsearch}

@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
-const xnxx = require('./xnxx');
+const {
+    xnxx
+} = require('./xnxx');
 const app = express();
 const port = 3100;
 
@@ -28,7 +30,7 @@ app.get('/xnxx', async (req, res) => {
         res.json(videos); // Send data as JSON
     } catch (error) {
         res.status(500).json({
-            error: 'Error fetching videos'
+            error: error
         });
     }
 });
@@ -43,7 +45,7 @@ app.get('/', async (req, res) => {
             videos
         });
     } catch (error) {
-        res.status(500).send('Error fetching videos');
+        res.status(500).send(error);
     }
 });
 

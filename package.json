@@ -5,6 +5,8 @@
   "main": "script.js",
   "scripts": {
     "start": "node index.js",
+    "start2": "pm2 start node index.js --name doods --exp-backoff-restart-delay=100 && pm2 logs doods",
+    "restart": "git pull && pm2 restart doods && pm2 logs doods",
     "dev": "nodemon index.js"
   },
   "keywords": [],

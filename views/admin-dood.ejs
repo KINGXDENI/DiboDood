@@ -690,54 +690,43 @@
     <%- include('template/footer.ejs') %>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            window.handleEdit = function (id) {
-                // Function to close the URL modal
-                function closeURLModal() {
-                    document.getElementById('showModalURL').classList.add('hidden');
-                }
+            // Function to close the URL modal
+            function closeURLModal() {
+                document.getElementById('showModalURL').classList.add('hidden');
+            }
 
-                // Event listener to close the URL modal when the close button is clicked
-                document.querySelector('[data-modal-close="showModalURL"]').addEventListener('click',
-                    closeURLModal);
+            // Event listener to close the URL modal when the close button is clicked
+            document.querySelector('[data-modal-close="showModalURL"]').addEventListener('click',
+                closeURLModal);
 
-                // Event listener for URL form submission
-                document.getElementById('url-form').addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    const url = document.getElementById('url-field').value;
+            // Event listener for URL form submission
+            document.getElementById('url-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const url = document.getElementById('url-field').value;
 
-                    fetch('/addvideo', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                url
-                            })
+                fetch('/addvideo', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            url
                         })
-                        .then(response => {
-                            if (response.ok) {
-                                // Show success alert
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: 'Video has been added successfully.',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                }).then(() => {
-                                    closeURLModal();
-                                    window.location.reload();
-                                .reload(); // Reload the page or update UI accordingly
-                                });
-                            } else {
-                                // Show error alert
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: 'Failed to add video. Please try again.',
-                                    icon: 'error',
-                                    confirmButtonText: 'OK'
-                                });
-                            }
-                        })
-                        .catch(error => {
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Show success alert
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Video has been added successfully.',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                closeURLModal();
+                                window.location
+                            .reload(); // Reload the page or update UI accordingly
+                            });
+                        } else {
                             // Show error alert
                             Swal.fire({
                                 title: 'Error!',
@@ -745,9 +734,21 @@
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });
-                            console.error('Error adding video:', error);
+                        }
+                    })
+                    .catch(error => {
+                        // Show error alert
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Failed to add video. Please try again.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
                         });
-                });
+                        console.error('Error adding video:', error);
+                    });
+            });
+            window.handleEdit = function (id) {
+
                 // Fetch video details from server
                 fetch(`/videos/${id}`)
                     .then(response => {

@@ -87,13 +87,13 @@ if (document.getElementById("customerList"))
         document.querySelector(".pagination-next").addEventListener("click", function () {
             document.querySelector(".pagination.listjs-pagination") ?
                 document.querySelector(".pagination.listjs-pagination").querySelector(".active") && document.querySelector(".pagination.listjs-pagination").querySelector(".active").nextElementSibling != null ?
-                    document.querySelector(".pagination.listjs-pagination").querySelector(".active").nextElementSibling.children[0].click() : "" : "";
+                document.querySelector(".pagination.listjs-pagination").querySelector(".active").nextElementSibling.children[0].click() : "" : "";
         });
 
         document.querySelector(".pagination-prev").addEventListener("click", function () {
             document.querySelector(".pagination.listjs-pagination") ?
                 document.querySelector(".pagination.listjs-pagination").querySelector(".active") && document.querySelector(".pagination.listjs-pagination").querySelector(".active").previousSibling != null ?
-                    document.querySelector(".pagination.listjs-pagination").querySelector(".active").previousSibling.children[0].click() : "" : "";
+                document.querySelector(".pagination.listjs-pagination").querySelector(".active").previousSibling.children[0].click() : "" : "";
         });
         refreshCallbacks();
     });
@@ -110,20 +110,22 @@ xhttp.onload = function () {
             phone: raw.phone,
             status: isStatus(raw.status)
         });
-        customerList.sort('id', { order: "desc" });
+        customerList.sort('id', {
+            order: "desc"
+        });
         refreshCallbacks();
     });
     customerList.remove("id", '<a href="javascript:void(0);" class="fw-medium link-primary id">#VZ2101</a>');
 }
-xhttp.open("GET", "assets/json/table-customer-list.json");
-xhttp.send();
+// xhttp.open("GET", "assets/json/table-customer-list.json");
+// xhttp.send();
 
-isCount = new DOMParser().parseFromString(
-    customerList.items.slice(-1)[0]._values.id,
-    "text/html"
-);
+// isCount = new DOMParser().parseFromString(
+//     customerList.items.slice(-1)[0]._values.id,
+//     "text/html"
+// );
 
-var isValue = isCount.body.firstElementChild.innerHTML;
+// var isValue = isCount.body.firstElementChild.innerHTML;
 
 var idField = document.getElementById("id-field"),
     customerNameField = document.getElementById("customername-field"),
@@ -201,10 +203,10 @@ document.querySelector("#customerList").addEventListener("click", function () {
 
 var table = document.getElementById("customerTable");
 // save all tr
-var tr = table.getElementsByTagName("tr");
-var trlist = table.querySelectorAll(".list tr");
+// var tr = table.getElementsByTagName("tr");
+// var trlist = table.querySelectorAll(".list tr");
 
-var count = 11;
+// var count = 11;
 
 // Fetch all the forms we want to apply custom Bootstrap validation styles to
 var forms = document.querySelectorAll('.tablelist-form')
@@ -231,7 +233,9 @@ Array.prototype.slice.call(forms).forEach(function (form) {
                     phone: phoneField.value,
                     status: isStatus(statusField.value),
                 });
-                customerList.sort('id', { order: "desc" });
+                customerList.sort('id', {
+                    order: "desc"
+                });
                 refreshCallbacks();
                 clearFields();
                 filterContact("All");
@@ -283,24 +287,24 @@ Array.prototype.slice.call(forms).forEach(function (form) {
     }, false)
 })
 
-var statusVal = new Choices(statusField);
+// var statusVal = new Choices(statusField);
 
-function isStatus(val) {
-    switch (val) {
-        case "Active":
-            return (
-                '<span class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">' +
-                val +
-                "</span>"
-            );
-        case "Block":
-            return (
-                '<span class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">' +
-                val +
-                "</span>"
-            );
-    }
-}
+// function isStatus(val) {
+//     switch (val) {
+//         case "Active":
+//             return (
+//                 '<span class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent">' +
+//                 val +
+//                 "</span>"
+//             );
+//         case "Block":
+//             return (
+//                 '<span class="px-2.5 py-0.5 inline-block text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">' +
+//                 val +
+//                 "</span>"
+//             );
+//     }
+// }
 
 function ischeckboxcheck() {
     Array.from(document.getElementsByName("checkAll")).forEach(function (x) {
@@ -380,6 +384,7 @@ function clearFields() {
     dateField.value = "";
     phoneField.value = "";
 }
+
 function deleteMultiple() {
     var ids_array = [];
     var items = document.getElementsByName('chk_child');
@@ -390,7 +395,7 @@ function deleteMultiple() {
             ids_array.push(id);
         }
     });
-    
+
     if (ids_array.length > 0) {
         if (confirm('Are you sure you want to delete this?')) {
             ids_array.forEach(function (id) {

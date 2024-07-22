@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Video {
-  id          Int      @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   title         String
   channelId     Int   
   channel       Channel  @relation(fields: [channelId], references: [id])
@@ -29,7 +29,7 @@ model Video {
 model Channel {
   id    Int    @id @default(autoincrement())
   name  String
-  url   String
+  url   String @unique
   logo  String
   videos Video[]
 }

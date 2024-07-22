@@ -8,11 +8,11 @@ const {
     scrapeYouTube
 } = require('./yt');
 const prisma = require('./db/prismaClient');
-const { getDood } = require('./dood');
+const { getDood, addScrapedVideo } = require('./dood');
 
 const app = express();
 const port = 3100;
-
+app.use(express.json());
 // Set up EJS as the view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -76,7 +76,29 @@ app.get('/xnxx', async (req, res) => {
         });
     }
 });
+app.post('/addvideo', async (req, res) => {
+    const {
+        url
+    } = req.body;
 
+    if (!url) {
+        return res.status(400).json({
+            error: 'URL is required'
+        });
+    }
+
+    try {
+        await addScrapedVideo(url);
+        res.status(201).json({
+            message: 'Video added successfully'
+        });
+    } catch (error) {
+        console.error('Error adding scraped video:', error);
+        res.status(500).json({
+            error: 'Internal Server Error'
+        });
+    }
+});
 
 
 app.get('/doods', async (req, res) => {

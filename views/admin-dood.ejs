@@ -1,0 +1,810 @@
+﻿<%- include('template/header.ejs') %>
+
+</head>
+
+<body
+    class="text-base bg-body-bg text-body font-public dark:text-zink-100 dark:bg-zink-800 group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
+    <div class="group-data-[sidebar-size=sm]:min-h-sm group-data-[sidebar-size=sm]:relative">
+
+        <%- include('template/sidebar.ejs') %>
+
+
+
+        <div class="relative min-h-screen group-data-[sidebar-size=sm]:min-h-sm">
+
+            <div
+                class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
+                <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
+
+                    <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
+                        <div class="grow">
+                            <h5 class="text-16">Data Doods</h5>
+                        </div>
+                        <!-- <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
+                        <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
+                            <a href="#!" class="text-slate-400 dark:text-zink-200">Tables</a>
+                        </li>
+                        <li class="text-slate-700 dark:text-zink-100">
+                            Data Doods
+                        </li>
+                    </ul> -->
+                    </div>
+
+                    <div class="card" id="customerList">
+                        <div class="card-body">
+                            <div class="grid grid-cols-1 gap-5 mb-5 xl:grid-cols-2">
+                                <div>
+                                    <div class="relative xl:w-3/6">
+                                        <input type="text"
+                                            class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                            placeholder="Search for ..." autocomplete="off">
+                                        <i data-lucide="search"
+                                            class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
+                                    </div>
+                                </div>
+                                <div class="ltr:md:text-end rtl:md:text-start">
+                                    <button type="button" data-modal-target="showModal"
+                                        class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-btn"
+                                        data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i
+                                            class="align-bottom ri-add-line me-1"></i> Add Video</button>
+                                    <button type="button" data-modal-target="showModalURL"
+                                        class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 add-btn"
+                                        data-bs-toggle="modal" id="create-btn" data-bs-target="#showModalURL"><i
+                                            class="align-bottom ri-add-line me-1"></i> Add Video Using URL</button>
+                                    <button type="button"
+                                        class="text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-custom-400/20"
+                                        onclick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full whitespace-nowrap" id="videoTable">
+                                    <thead class="bg-slate-100 dark:bg-zink-600">
+                                        <tr>
+                                            <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500"
+                                                scope="col" style="width: 50px;">
+                                                <input
+                                                    class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400"
+                                                    type="checkbox" id="checkAll" value="option">
+                                            </th>
+                                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                                data-sort="title">Title</th>
+                                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                                data-sort="duration">Duration</th>
+                                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                                data-sort="views">Views</th>
+                                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                                data-sort="postedAt">Posted At</th>
+                                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                                data-sort="channel">Channel</th>
+                                            <th class="sort px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 ltr:text-left rtl:text-right"
+                                                data-sort="action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list form-check-all">
+                                        <% videos.forEach(video => { %>
+                                        <tr>
+                                            <th class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"
+                                                scope="row">
+                                                <input
+                                                    class="border rounded-sm appearance-none cursor-pointer size-4 bg-slate-100 border-slate-200 dark:bg-zink-600 dark:border-zink-500 checked:bg-custom-500 checked:border-custom-500 dark:checked:bg-custom-500 dark:checked:border-custom-500 checked:disabled:bg-custom-400 checked:disabled:border-custom-400"
+                                                    type="checkbox" name="chk_child">
+                                            </th>
+                                            <td
+                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 title">
+                                                <%= video.title %></td>
+                                            <td
+                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 duration">
+                                                <%= video.duration %></td>
+                                            <td
+                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 views">
+                                                <%= video.views %></td>
+                                            <td
+                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 postedAt">
+                                                <%= new Date(video.postedAt).toLocaleDateString() %></td>
+                                            <td
+                                                class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 channel">
+                                                <%= video.channel.name %></td>
+                                            <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">
+                                                <div class="flex gap-2">
+                                                    <div class="edit">
+                                                        <button onclick="handleEdit('<%= video.id %>')"
+                                                            class="py-1 text-xs text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20 edit-item-btn">Edit</button>
+                                                    </div>
+                                                    <div class="remove">
+                                                        <button onclick="handleDelete('/videos/<%= video.id %>')"
+                                                            class="py-1 text-xs text-white bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                                <div class="noresult" style="display: none">
+                                    <div class="text-center p-7">
+                                        <h5 class="mb-2">Sorry! No Result Found</h5>
+                                        <p class="mb-0 text-slate-500 dark:text-zink-200">We've searched more than 150+
+                                            Orders We did not find any orders for you search.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end mt-4">
+                                <div class="flex gap-2 pagination-wrap">
+                                    <a class="inline-flex items-center justify-center bg-white dark:bg-zink-700 h-8 px-3 transition-all duration-150 ease-linear border rounded border-slate-200 dark:border-zink-500 text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-500 dark:[&.active]:text-custom-500 [&.active]:bg-custom-50 dark:[&.active]:bg-custom-500/10 [&.active]:border-custom-50 dark:[&.active]:border-custom-500/10 [&.active]:hover:text-custom-700 dark:[&.active]:hover:text-custom-700 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto page-item pagination-prev disabled pagination-prev disabled"
+                                        href="#">
+                                        Previous
+                                    </a>
+                                    <ul class="flex gap-2 mb-0 pagination listjs-pagination"></ul>
+                                    <a class="inline-flex items-center justify-center bg-white dark:bg-zink-700 h-8 px-3 transition-all duration-150 ease-linear border rounded border-slate-200 dark:border-zink-500 text-slate-500 dark:text-zink-200 hover:text-custom-500 dark:hover:text-custom-500 hover:bg-custom-50 dark:hover:bg-custom-500/10 focus:bg-custom-50 dark:focus:bg-custom-500/10 focus:text-custom-500 dark:focus:text-custom-500 [&.active]:text-custom-500 dark:[&.active]:text-custom-500 [&.active]:bg-custom-50 dark:[&.active]:bg-custom-500/10 [&.active]:border-custom-50 dark:[&.active]:border-custom-500/10 [&.active]:hover:text-custom-700 dark:[&.active]:hover:text-custom-700 [&.disabled]:text-slate-400 dark:[&.disabled]:text-zink-300 [&.disabled]:cursor-auto page-item pagination-prev disabled pagination-next"
+                                        href="#">
+                                        Next
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+
+
+            <footer
+                class="ltr:md:left-vertical-menu rtl:md:right-vertical-menu group-data-[sidebar-size=md]:ltr:md:left-vertical-menu-md group-data-[sidebar-size=md]:rtl:md:right-vertical-menu-md group-data-[sidebar-size=sm]:ltr:md:left-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:md:right-vertical-menu-sm absolute right-0 bottom-0 px-4 h-14 group-data-[layout=horizontal]:ltr:left-0  group-data-[layout=horizontal]:rtl:right-0 left-0 border-t py-3 flex items-center dark:border-zink-600">
+                <div
+                    class="group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl w-full">
+                    <div
+                        class="grid items-center grid-cols-1 text-center lg:grid-cols-2 text-slate-400 dark:text-zink-200 ltr:lg:text-left rtl:lg:text-right">
+                        <div>
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script> StarCode Kh
+                        </div>
+                        <div class="hidden lg:block">
+                            <div class="ltr:text-right rtl:text-left">
+                                Design & Develop by StarCode Kh
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+    </div>
+    <!-- end main content -->
+    <div id="showModalURL" modal-center=""
+        class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
+        <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+            <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
+                <h5 class="text-16" id="exampleModalLabel">Add Video Using URL</h5>
+                <button data-modal-close="showModalURL"
+                    class="transition-all duration-200 ease-linear text-slate-400 hover:text-slate-500">
+                    <i data-lucide="x" class="size-5"></i>
+                </button>
+            </div>
+            <div class="max-h-[calc(theme('height.screen')_-_180px)] overflow-y-auto p-4">
+                <form id="url-form" class="tablelist-form">
+                    <div class="mb-3">
+                        <label for="url-field" class="inline-block mb-2 text-base font-medium">Video URL <span
+                                class="text-red-500">*</span></label>
+                        <input type="url" id="url-field" name="url"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Enter video URL" required="">
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="button"
+                            class="btn bg-slate-100 text-slate-600 border-slate-200 hover:text-slate-800 hover:bg-slate-200 focus:text-slate-800 focus:bg-slate-200 focus:ring focus:ring-slate-100 active:text-slate-800 active:bg-slate-300 active:border-slate-300 dark:bg-zink-700 dark:text-zink-100 dark:border-zink-500 dark:hover:bg-zink-600 dark:hover:border-zink-500 dark:focus:ring-0 dark:active:bg-zink-500"
+                            data-modal-close="showModalURL">Close</button>
+                        <button type="submit"
+                            class="btn bg-custom-500 text-white border-custom-500 hover:text-white hover:bg-custom-600 focus:text-white focus:bg-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
+                            id="url-submit-btn">Add Video</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="showModal" modal-center=""
+        class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
+        <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+            <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
+                <h5 class="text-16" id="exampleModalLabel">Add Video</h5>
+                <button onclick="closeAddModal()"
+                    class="transition-all duration-200 ease-linear text-slate-400 hover:text-slate-500">
+                    <i data-feather="x" class="size-5"></i>
+                </button>
+            </div>
+            <div class="max-h-[calc(theme('height.screen')_-_180px)] overflow-y-auto p-4">
+                <form action="/add-video" method="POST">
+                    <div class="mb-3">
+                        <label for="title-field" class="inline-block mb-2 text-base font-medium">Title <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="title-field" name="title"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Enter video title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="videoURL-field" class="inline-block mb-2 text-base font-medium">Video URL <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="videoURL-field" name="videoURL"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Enter video URL" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="thumbnail-field" class="inline-block mb-2 text-base font-medium">Thumbnail URL <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="thumbnail-field" name="thumbnailURL"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Enter thumbnail URL" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="duration-field" class="inline-block mb-2 text-base font-medium">Duration <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="duration-field" name="duration"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Enter duration" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="views-field" class="inline-block mb-2 text-base font-medium">Views <span
+                                class="text-red-500">*</span></label>
+                        <input type="number" id="views-field" name="views"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Enter views" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="postedAt-field" class="inline-block mb-2 text-base font-medium">Posted At <span
+                                class="text-red-500">*</span></label>
+                        <input type="date" id="postedAt-field" name="postedAt"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="channelName-field" class="inline-block mb-2 text-base font-medium">Channel Name
+                            <span class="text-red-500">*</span></label>
+                        <input type="text" id="channelName-field" name="channelName"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Enter channel name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="channelUrl-field" class="inline-block mb-2 text-base font-medium">Channel URL <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="channelUrl-field" name="channelUrl"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Enter channel URL" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="logoURL-field" class="inline-block mb-2 text-base font-medium">Logo URL <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="logoURL-field" name="logoURL"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Enter logo URL" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="platform-field" class="inline-block mb-2 text-base font-medium">Platform <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="platform-field" name="platform"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                            placeholder="Enter platform" required>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" onclick="closeAddModal()"
+                            class="text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 hover:border-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:border-slate-600 active:ring active:ring-slate-100 dark:ring-slate-400/10">Close</button>
+                        <button type="submit"
+                            class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10"
+                            id="add-btn">Add Video</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Video -->
+    <div id="editModal" modal-center=""
+        class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
+        <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+            <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
+                <h5 class="text-16" id="exampleModalLabel">Edit Video</h5>
+                <button data-modal-close="editModal"
+                    class="transition-all duration-200 ease-linear text-slate-400 hover:text-slate-500">
+                    <i data-lucide="x" class="size-5"></i>
+                </button>
+            </div>
+            <div class="max-h-[calc(theme('height.screen')_-_180px)] overflow-y-auto p-4">
+                <form id="edit-form" action="/edit-video/" method="POST">
+                    <div class="mb-3">
+                        <label for="edit-title-field" class="inline-block mb-2 text-base font-medium">Title <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="edit-title-field" name="title"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                            placeholder="Enter video title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-videoURL-field" class="inline-block mb-2 text-base font-medium">Video URL <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="edit-videoURL-field" name="videoURL"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                            placeholder="Enter video URL" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-thumbnail-field" class="inline-block mb-2 text-base font-medium">Thumbnail URL
+                            <span class="text-red-500">*</span></label>
+                        <input type="text" id="edit-thumbnail-field" name="thumbnailURL"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                            placeholder="Enter thumbnail URL" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-duration-field" class="inline-block mb-2 text-base font-medium">Duration <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="edit-duration-field" name="duration"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                            placeholder="Enter duration" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-views-field" class="inline-block mb-2 text-base font-medium">Views <span
+                                class="text-red-500">*</span></label>
+                        <input type="number" id="edit-views-field" name="views"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                            placeholder="Enter views" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-postedAt-field" class="inline-block mb-2 text-base font-medium">Posted At <span
+                                class="text-red-500">*</span></label>
+                        <input type="date" id="edit-postedAt-field" name="postedAt"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-channelName-field" class="inline-block mb-2 text-base font-medium">Channel Name
+                            <span class="text-red-500">*</span></label>
+                        <input type="text" id="edit-channelName-field" name="channelName"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                            placeholder="Enter channel name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-channelUrl-field" class="inline-block mb-2 text-base font-medium">Channel URL
+                            <span class="text-red-500">*</span></label>
+                        <input type="text" id="edit-channelUrl-field" name="channelUrl"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                            placeholder="Enter channel URL" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-logoURL-field" class="inline-block mb-2 text-base font-medium">Logo URL <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="edit-logoURL-field" name="logoURL"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                            placeholder="Enter logo URL" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-platform-field" class="inline-block mb-2 text-base font-medium">Platform <span
+                                class="text-red-500">*</span></label>
+                        <input type="text" id="edit-platform-field" name="platform"
+                            class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                            placeholder="Enter platform" required>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button type="button" onclick="closeEditModal()"
+                            class="text-white btn bg-slate-500 border-slate-500">Close</button>
+                        <button type="submit" class="text-white bg-yellow-500 border-yellow-500 btn" id="edit-btn">Edit
+                            Video</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" modal-center=""
+        class="fixed flex flex-col hidden transition-all duration-300 ease-in-out left-2/4 z-drawer -translate-x-2/4 -translate-y-2/4 show">
+        <div class="w-screen md:w-[30rem] bg-white shadow rounded-md dark:bg-zink-600">
+            <div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-zink-500">
+                <h5 class="text-16" id="exampleModalLabel">Confirm Delete</h5>
+                <button data-modal-close="deleteModal"
+                    class="transition-all duration-200 ease-linear text-slate-400 hover:text-slate-500">
+                    <i data-lucide="x" class="size-5"></i>
+                </button>
+            </div>
+            <div class="max-h-[calc(theme('height.screen')_-_180px)] overflow-y-auto p-4">
+                <p>Are you sure you want to delete this video?</p>
+                <div class="flex justify-end gap-2 mt-4">
+                    <button type="button" data-modal-close="deleteModal"
+                        class="text-white btn bg-slate-500 border-slate-500 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:border-slate-600">Cancel</button>
+                    <button type="button" id="confirm-delete-btn"
+                        class="text-white btn bg-red-500 border-red-500 hover:text-white hover:bg-red-600 focus:text-white focus:bg-red-600 focus:border-red-600">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="fixed items-center hidden bottom-6 right-12 h-header group-data-[navbar=hidden]:flex">
+        <button data-drawer-target="customizerButton" type="button"
+            class="inline-flex items-center justify-center w-12 h-12 p-0 transition-all duration-200 ease-linear rounded-md shadow-lg text-sky-50 bg-sky-500">
+            <i data-lucide="settings" class="inline-block w-5 h-5"></i>
+        </button>
+    </div>
+
+    <div id="customizerButton" drawer-end=""
+        class="fixed inset-y-0 flex flex-col w-full transition-transform duration-300 ease-in-out transform bg-white shadow ltr:right-0 rtl:left-0 md:w-96 z-drawer show dark:bg-zink-600">
+        <div class="flex justify-between p-4 border-b border-slate-200 dark:border-zink-500">
+            <div class="grow">
+                <h5 class="mb-1 text-16">starcode Theme Customizer</h5>
+                <p class="font-normal text-slate-500 dark:text-zink-200">Choose your themes & layouts etc.</p>
+            </div>
+            <div class="shrink-0">
+                <button data-drawer-close="customizerButton"
+                    class="transition-all duration-150 ease-linear text-slate-500 hover:text-slate-800 dark:text-zink-200 dark:hover:text-zink-50"><i
+                        data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+        </div>
+        <div class="h-full p-6 overflow-y-auto">
+            <div>
+                <h5 class="mb-3 underline capitalize text-15">Choose Layouts</h5>
+                <div class="grid grid-cols-1 mb-5 gap-7 sm:grid-cols-2">
+                    <div class="relative">
+                        <input id="layout-one" name="dataLayout"
+                            class="absolute w-4 h-4 border rounded-full appearance-none cursor-pointer ltr:right-2 rtl:left-2 top-2 vertical-menu-btn bg-slate-100 border-slate-300 checked:bg-custom-500 checked:border-custom-500 dark:bg-zink-400 dark:border-zink-500"
+                            type="radio" value="vertical" checked="">
+                        <label
+                            class="block w-full h-24 p-0 overflow-hidden border rounded-lg cursor-pointer border-slate-200 dark:border-zink-500"
+                            for="layout-one">
+                            <span class="flex h-full gap-0">
+                                <span class="shrink-0">
+                                    <span
+                                        class="flex flex-col h-full gap-1 p-1 ltr:border-r rtl:border-l border-slate-200 dark:border-zink-500">
+                                        <span class="block p-1 px-2 mb-2 rounded bg-slate-100 dark:bg-zink-400"></span>
+                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
+                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
+                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
+                                    </span>
+                                </span>
+                                <span class="grow">
+                                    <span class="flex flex-col h-full">
+                                        <span class="block h-3 bg-slate-100 dark:bg-zink-500"></span>
+                                        <span class="block h-3 mt-auto bg-slate-100 dark:bg-zink-500"></span>
+                                    </span>
+                                </span>
+                            </span>
+                        </label>
+                        <h5 class="mt-2 text-center text-15">Vertical</h5>
+                    </div>
+
+                    <div class="relative">
+                        <input id="layout-two" name="dataLayout"
+                            class="absolute w-4 h-4 border rounded-full appearance-none cursor-pointer ltr:right-2 rtl:left-2 top-2 vertical-menu-btn bg-slate-100 border-slate-300 checked:bg-custom-500 checked:border-custom-500 dark:bg-zink-400 dark:border-zink-500"
+                            type="radio" value="horizontal">
+                        <label
+                            class="block w-full h-24 p-0 overflow-hidden border rounded-lg cursor-pointer border-slate-200 dark:border-zink-500"
+                            for="layout-two">
+                            <span class="flex flex-col h-full gap-1">
+                                <span class="flex items-center gap-1 p-1 bg-slate-100 dark:bg-zink-500">
+                                    <span class="block p-1 ml-1 bg-white rounded dark:bg-zink-500"></span>
+                                    <span class="block p-1 px-2 pb-0 bg-white dark:bg-zink-500 ms-auto"></span>
+                                    <span class="block p-1 px-2 pb-0 bg-white dark:bg-zink-500"></span>
+                                </span>
+                                <span class="block p-1 bg-slate-100 dark:bg-zink-500"></span>
+                                <span class="block p-1 mt-auto bg-slate-100 dark:bg-zink-500"></span>
+                            </span>
+                        </label>
+                        <h5 class="mt-2 text-center text-15">Horizontal</h5>
+                    </div>
+                </div>
+
+                <div id="semi-dark">
+                    <div class="flex items-center">
+                        <div class="relative inline-block w-10 mr-2 align-middle transition duration-200 ease-in">
+                            <input type="checkbox" name="customDefaultSwitch" value="dark" id="customDefaultSwitch"
+                                class="absolute block w-5 h-5 transition duration-300 ease-linear border-2 rounded-full appearance-none cursor-pointer border-slate-200 bg-white/80 peer/published checked:bg-white checked:right-0 checked:border-custom-500 arrow-none dark:border-zink-500 dark:bg-zink-500 dark:checked:bg-zink-400 checked:bg-none">
+                            <label for="customDefaultSwitch"
+                                class="block h-5 overflow-hidden transition duration-300 ease-linear border rounded-full cursor-pointer border-slate-200 bg-slate-200 peer-checked/published:bg-custom-500 peer-checked/published:border-custom-500 dark:border-zink-500 dark:bg-zink-600"></label>
+                        </div>
+                        <label for="customDefaultSwitch" class="inline-block text-base font-medium">Semi Dark (Sidebar &
+                            Header)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <!-- data-skin="" -->
+                <h5 class="mb-3 underline capitalize text-15">Skin Layouts</h5>
+                <div class="grid grid-cols-1 mb-5 gap-7 sm:grid-cols-2">
+                    <div class="relative">
+                        <input id="layoutSkitOne" name="dataLayoutSkin"
+                            class="absolute w-4 h-4 border rounded-full appearance-none cursor-pointer ltr:right-2 rtl:left-2 top-2 vertical-menu-btn bg-slate-100 border-slate-300 checked:bg-custom-500 checked:border-custom-500 dark:bg-zink-400 dark:border-zink-500"
+                            type="radio" value="default">
+                        <label
+                            class="block w-full h-24 p-0 overflow-hidden border rounded-lg cursor-pointer border-slate-200 dark:border-zink-500 bg-slate-50 dark:bg-zink-600"
+                            for="layoutSkitOne">
+                            <span class="flex h-full gap-0">
+                                <span class="shrink-0">
+                                    <span
+                                        class="flex flex-col h-full gap-1 p-1 ltr:border-r rtl:border-l border-slate-200 dark:border-zink-500">
+                                        <span class="block p-1 px-2 mb-2 rounded bg-slate-100 dark:bg-zink-400"></span>
+                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
+                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
+                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
+                                    </span>
+                                </span>
+                                <span class="grow">
+                                    <span class="flex flex-col h-full">
+                                        <span class="block h-3 bg-slate-100 dark:bg-zink-500"></span>
+                                        <span class="block h-3 mt-auto bg-slate-100 dark:bg-zink-500"></span>
+                                    </span>
+                                </span>
+                            </span>
+                        </label>
+                        <h5 class="mt-2 text-center text-15">Default</h5>
+                    </div>
+
+                    <div class="relative">
+                        <input id="layoutSkitTwo" name="dataLayoutSkin"
+                            class="absolute w-4 h-4 border rounded-full appearance-none cursor-pointer ltr:right-2 rtl:left-2 top-2 vertical-menu-btn bg-slate-100 border-slate-300 checked:bg-custom-500 checked:border-custom-500 dark:bg-zink-400 dark:border-zink-500"
+                            type="radio" value="bordered" checked="">
+                        <label
+                            class="block w-full h-24 p-0 overflow-hidden border rounded-lg cursor-pointer border-slate-200 dark:border-zink-500"
+                            for="layoutSkitTwo">
+                            <span class="flex h-full gap-0">
+                                <span class="shrink-0">
+                                    <span
+                                        class="flex flex-col h-full gap-1 p-1 ltr:border-r rtl:border-l border-slate-200 dark:border-zink-500">
+                                        <span class="block p-1 px-2 mb-2 rounded bg-slate-100 dark:bg-zink-400"></span>
+                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
+                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
+                                        <span class="block p-1 px-2 pb-0 bg-slate-100 dark:bg-zink-500"></span>
+                                    </span>
+                                </span>
+                                <span class="grow">
+                                    <span class="flex flex-col h-full">
+                                        <span class="block h-3 border-b border-slate-200 dark:border-zink-500"></span>
+                                        <span
+                                            class="block h-3 mt-auto border-t border-slate-200 dark:border-zink-500"></span>
+                                    </span>
+                                </span>
+                            </span>
+                        </label>
+                        <h5 class="mt-2 text-center text-15">Bordered</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <!-- data-mode="" -->
+                <h5 class="mb-3 underline capitalize text-15">Light & Dark</h5>
+                <div class="flex gap-3">
+                    <button type="button" id="dataModeOne" name="dataMode" value="light"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500 active">Light
+                        Mode</button>
+                    <button type="button" id="dataModeTwo" name="dataMode" value="dark"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Dark
+                        Mode</button>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <!-- dir="ltr" -->
+                <h5 class="mb-3 underline capitalize text-15">LTR & RTL</h5>
+                <div class="flex flex-wrap gap-3">
+                    <button type="button" id="diractionOne" name="dir" value="ltr"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500 active">LTR
+                        Mode</button>
+                    <button type="button" id="diractionTwo" name="dir" value="rtl"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">RTL
+                        Mode</button>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <!-- data-content -->
+                <h5 class="mb-3 underline capitalize text-15">Content Width</h5>
+                <div class="flex gap-3">
+                    <button type="button" id="datawidthOne" name="datawidth" value="fluid"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500 active">Fluid</button>
+                    <button type="button" id="datawidthTwo" name="datawidth" value="boxed"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Boxed</button>
+                </div>
+            </div>
+
+            <div class="mt-6" id="sidebar-size">
+                <!-- data-sidebar-size="" -->
+                <h5 class="mb-3 underline capitalize text-15">Sidebar Size</h5>
+                <div class="flex flex-wrap gap-3">
+                    <button type="button" id="sidebarSizeOne" name="sidebarSize" value="lg"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500 active">Default</button>
+                    <button type="button" id="sidebarSizeTwo" name="sidebarSize" value="md"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Compact</button>
+                    <button type="button" id="sidebarSizeThree" name="sidebarSize" value="sm"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Small
+                        (Icon)</button>
+                </div>
+            </div>
+
+            <div class="mt-6" id="navigation-type">
+                <!-- data-navbar="" -->
+                <h5 class="mb-3 underline capitalize text-15">Navigation Type</h5>
+                <div class="flex flex-wrap gap-3">
+                    <button type="button" id="navbarTwo" name="navbar" value="sticky"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500 active">Sticky</button>
+                    <button type="button" id="navbarOne" name="navbar" value="scroll"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Scroll</button>
+                    <button type="button" id="navbarThree" name="navbar" value="bordered"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Bordered</button>
+                    <button type="button" id="navbarFour" name="navbar" value="hidden"
+                        class="transition-all duration-200 ease-linear bg-white border-dashed text-slate-500 btn border-slate-200 hover:text-slate-500 hover:bg-slate-50 hover:border-slate-200 [&.active]:text-custom-500 [&.active]:bg-custom-50 [&.active]:border-custom-200 dark:bg-zink-600 dark:text-zink-200 dark:border-zink-400 dark:hover:bg-zink-600 dark:hover:text-zink-100 dark:hover:border-zink-400 dark:[&.active]:bg-custom-500/10 dark:[&.active]:border-custom-500/30 dark:[&.active]:text-custom-500">Hidden</button>
+                </div>
+            </div>
+
+            <div class="mt-6" id="sidebar-color">
+                <!-- data-sidebar="" light, dark, brand, modern-->
+                <h5 class="mb-3 underline capitalize text-15">Sizebar Colors</h5>
+                <div class="flex flex-wrap gap-3">
+                    <button type="button" id="sidebarColorOne" name="sidebarColor" value="light"
+                        class="flex items-center justify-center w-10 h-10 bg-white border rounded-md border-slate-200 group active"><i
+                            data-lucide="check"
+                            class="w-5 h-5 hidden group-[.active]:inline-block text-slate-600"></i></button>
+                    <button type="button" id="sidebarColorTwo" name="sidebarColor" value="dark"
+                        class="flex items-center justify-center w-10 h-10 border rounded-md border-zink-900 bg-zink-900 group"><i
+                            data-lucide="check"
+                            class="w-5 h-5 hidden group-[.active]:inline-block text-white"></i></button>
+                    <button type="button" id="sidebarColorThree" name="sidebarColor" value="brand"
+                        class="flex items-center justify-center w-10 h-10 border rounded-md border-custom-800 bg-custom-800 group"><i
+                            data-lucide="check"
+                            class="w-5 h-5 hidden group-[.active]:inline-block text-white"></i></button>
+                    <button type="button" id="sidebarColorFour" name="sidebarColor" value="modern"
+                        class="flex items-center justify-center w-10 h-10 border rounded-md border-purple-950 bg-gradient-to-t from-red-400 to-purple-500 group"><i
+                            data-lucide="check"
+                            class="w-5 h-5 hidden group-[.active]:inline-block text-white"></i></button>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <!-- data-topbar="" light, dark, brand, modern-->
+                <h5 class="mb-3 underline capitalize text-15">Topbar Colors</h5>
+                <div class="flex flex-wrap gap-3">
+                    <button type="button" id="topbarColorOne" name="topbarColor" value="light"
+                        class="flex items-center justify-center w-10 h-10 bg-white border rounded-md border-slate-200 group active"><i
+                            data-lucide="check"
+                            class="w-5 h-5 hidden group-[.active]:inline-block text-slate-600"></i></button>
+                    <button type="button" id="topbarColorTwo" name="topbarColor" value="dark"
+                        class="flex items-center justify-center w-10 h-10 border rounded-md border-zink-900 bg-zink-900 group"><i
+                            data-lucide="check"
+                            class="w-5 h-5 hidden group-[.active]:inline-block text-white"></i></button>
+                    <button type="button" id="topbarColorThree" name="topbarColor" value="brand"
+                        class="flex items-center justify-center w-10 h-10 border rounded-md border-custom-800 bg-custom-800 group"><i
+                            data-lucide="check"
+                            class="w-5 h-5 hidden group-[.active]:inline-block text-white"></i></button>
+                </div>
+            </div>
+
+        </div>
+        <div class="flex items-center justify-between gap-3 p-4 border-t border-slate-200 dark:border-zink-500">
+            <button type="button" id="reset-layout"
+                class="w-full transition-all duration-200 ease-linear text-slate-500 btn bg-slate-200 border-slate-200 hover:text-slate-600 hover:bg-slate-300 hover:border-slate-300 focus:text-slate-600 focus:bg-slate-300 focus:border-slate-300 focus:ring focus:ring-slate-100">Reset</button>
+            <a href="#!"
+                class="w-full text-white transition-all duration-200 ease-linear bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100">Buy
+                Now</a>
+        </div>
+    </div>
+    <%- include('template/footer.ejs') %>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.handleEdit = function (id) {
+                // Fetch video details from server
+                fetch(`/videos/${id}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to fetch video details');
+                        return response.json();
+                    })
+                    .then(video => {
+                        if (!video) {
+                            console.error('Video not found');
+                            return;
+                        }
+
+                        // Show SweetAlert2 prompt for editing
+                        Swal.fire({
+                            title: 'Edit Video',
+                            html: `
+            <input id="swal-title" class="swal2-input" placeholder="Title" value="${video.title}">
+            <input id="swal-thumbnail" class="swal2-input" placeholder="Thumbnail URL" value="${video.thumbnail}">
+            <input id="swal-duration" class="swal2-input" placeholder="Duration" value="${video.duration}">
+            <input id="swal-views" class="swal2-input" type="number" placeholder="Views" value="${video.views}">
+            <input id="swal-postedAt" class="swal2-input" type="date" placeholder="Posted At"
+                value="${new Date(video.postedAt).toISOString().split('T')[0]}">
+            <input id="swal-channel" class="swal2-input" placeholder="Channel" value="${video.channel.name}">
+            `,
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                return {
+                                    title: document.getElementById('swal-title').value,
+                                    thumbnail: document.getElementById('swal-thumbnail')
+                                        .value,
+                                    duration: document.getElementById('swal-duration')
+                                        .value,
+                                    views: document.getElementById('swal-views').value,
+                                    postedAt: document.getElementById('swal-postedAt')
+                                        .value,
+                                    channel: document.getElementById('swal-channel').value
+                                };
+                            }
+                        }).then(result => {
+                            if (result.isConfirmed) {
+                                const updatedVideo = result.value;
+
+                                // Send updated video data to server
+                                fetch(`/videos/${id}`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(updatedVideo)
+                                    })
+                                    .then(response => {
+                                        if (!response.ok) throw new Error(
+                                            'Failed to update video');
+                                        Swal.fire('Updated!', 'Video has been updated.',
+                                            'success').then(() => {
+                                            window.location
+                                        .reload(); // Reload the page or update UI
+                                        });
+                                    })
+                                    .catch(error => {
+                                        Swal.fire('Error!', 'Failed to update video.',
+                                            'error');
+                                        console.error('Error updating video:', error);
+                                    });
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        Swal.fire('Error!', 'Failed to fetch video details.', 'error');
+                        console.error('Error fetching video details:', error);
+                    });
+            };
+            // Function to handle delete
+            window.handleDelete = function (url) { // Ensure function is attached to window object
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This action cannot be undone.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(url, {
+                            method: 'DELETE'
+                        }).then(response => {
+                            if (response.ok) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                ).then(() => {
+                                    window.location
+                                        .reload(); // Reload the page or update UI accordingly
+                                });
+                            } else {
+                                console.error('Error deleting video');
+                                Swal.fire(
+                                    'Error!',
+                                    'There was an error deleting the video.',
+                                    'error'
+                                );
+                            }
+                        }).catch(error => {
+                            console.error('Error deleting video', error);
+                            Swal.fire(
+                                'Error!',
+                                'There was an error deleting the video.',
+                                'error'
+                            );
+                        });
+                    }
+                });
+            }
+        });
+    </script>

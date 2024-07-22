@@ -27,7 +27,7 @@ const scrapeVideoData = async (url) => {
         const duration = $('body > main > section:nth-child(2) > div > div > div > p:nth-child(1)').text().trim();
         const postedAt = $('body > main > section:nth-child(2) > div > div > div > p:nth-child(3)').text().trim();
         const thumbnailURL = $('#wrapper > img').attr('data-src');
-        const views = Math.floor(Math.random() * 1000000); // Generate random views
+        const views = Math.floor(Math.random() * 10000); // Generate random views
         const channelName = url.split('://')[1].split('/')[0]; // Extract channel name from URL
         const channelURL = url.split('://')[1].split('/d/')[0]; // Extract channel URL from URL
         const logo = $('head > link:nth-child(8)').attr('href');

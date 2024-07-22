@@ -48,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
         iframeSrc = getYouTubeEmbedURL(url);
       } else if (platform === 'xnxx') {
         iframeSrc = await getXnxxIframe(url);
+      }else if (platform === 'dood') {
+        iframeSrc = await getDoodIframe(url);
       }
 
       Swal.fire({
@@ -81,4 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
       return '';
     }
   }
+  function getDoodIframe(url) {
+    const newUrl = url.replace('/d/', '/e/');
+    return newUrl;
+  }
+
 });

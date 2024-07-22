@@ -7,6 +7,9 @@ const {
 const {
     scrapeYouTube
 } = require('./yt');
+const prisma = require('./db/prismaClient');
+const { getDood } = require('./dood');
+
 const app = express();
 const port = 3100;
 
@@ -26,6 +29,11 @@ const categories = [{
     {
         name: 'Xnxx',
         url: 'Xnxx',
+        active: false
+    },
+    {
+        name: 'Doods',
+        url: 'Doods',
         active: false
     },
     // Add more categories as needed
@@ -69,6 +77,22 @@ app.get('/xnxx', async (req, res) => {
     }
 });
 
+
+
+app.get('/doods', async (req, res) => {
+    try {
+        const videos = await getDood(); // Fetch videos using xnxx function
+        const updatedCategories = updateActiveCategory(categories, 'Doods');
+        res.render('index', {
+            categories: updatedCategories,
+            videos
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        });
+    }
+});
 // Route to render the homepage
 app.get('/', async (req, res) => {
     try {
